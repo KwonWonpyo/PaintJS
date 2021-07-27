@@ -9,7 +9,7 @@ const savePng = document.getElementById("jsSavePNG");
 const saveJpg = document.getElementById("jsSaveJPG");
 
 const INITIAL_COLOR = "#2c2c2c";
-const CANVAS_SIZE = 700;
+const CANVAS_SIZE = 500;
 
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
@@ -30,6 +30,21 @@ function stopPainting() {
     painting = false;
 }
 
+function changeCursor(mode) {
+    if(mode === brush) {
+        canvas.style.cursor = "url(pencil_big.cur), auto";
+    }
+    else if(mode === fill) {
+        canvas.style.cursor = "url(paint_bucket.cur), auto";
+    }
+    else if(mode === erase) {
+        canvas.style.cursor = "url(eraser.cur), auto";
+    }
+    else {
+        canvas.style.cursor = "auto";
+    }
+}
+
 function onMouseMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
@@ -47,10 +62,9 @@ function onMouseMove(event) {
 
 function handleModeChange(event) {
     mode = event.target;
-    
+    changeCursor(mode);
     for(i = 0 ; i < 3 ; i++){
         var button = MODE_BUTTON[i];
-        console.log(button);
         if(button === mode){
             button.style.backgroundColor = "#3e98ff";
         }
@@ -70,7 +84,6 @@ function handleRangeChange(event) {
     const size = event.target.value;
     ctx.lineWidth = size;
 }
-
 
 function handleCanvasClick() {
     if (mode === MODE_BUTTON[1]) {
