@@ -2,8 +2,11 @@ const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
-const mode = document.getElementById("jsMode");
-const saveBtn = document.getElementById("jsSave");
+const brush = document.getElementById("jsBrush");
+const fill = document.getElementById("jsFill");
+const erase = document.getElementById("jsErase");
+const savePng = document.getElementById("jsSavePNG");
+const saveJpg = document.getElementById("jsSaveJPG");
 
 const INITIAL_COLOR = "#2c2c2c";
 const CANVAS_SIZE = 700;
@@ -15,26 +18,45 @@ ctx.strokeStyle = INITIAL_COLOR;
 ctx.fillStyle = INITIAL_COLOR;
 ctx.lineWidth = 2.5;
 
+// 모드 설정 - 첫 로딩 시 brush
+const MODE_BUTTON = [brush, fill, erase];
+let mode = brush;
 let painting = false;
-let filling = false;
 
 function startPainting() {
-    painting=true;
+    painting = true;
 }
-function stopPainting(event) {
-    painting=false;
+function stopPainting() {
+    painting = false;
 }
 
 function onMouseMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
-    if(!painting) {
-        ctx.beginPath();
-        ctx.moveTo(x, y);
+    if(mode === brush){
+        if(!painting) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+        else {
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
     }
-    else {
-        ctx.lineTo(x, y);
-        ctx.stroke();
+}
+
+function handleModeChange(event) {
+    mode = event.target;
+    
+    for(i = 0 ; i < 3 ; i++){
+        var button = MODE_BUTTON[i];
+        console.log(button);
+        if(button === mode){
+            button.style.backgroundColor = "#3e98ff";
+        }
+        else {
+            button.style.backgroundColor = "white";
+        }
     }
 }
 
@@ -49,19 +71,9 @@ function handleRangeChange(event) {
     ctx.lineWidth = size;
 }
 
-function handleModeClick() {
-    if (filling === true) {
-        filling = false;
-        mode.innerText = "Fill";
-    } 
-    else {
-        filling = true;
-        mode.innerText = "Paint";
-    }
-}
 
 function handleCanvasClick() {
-    if (filling) {
+    if (mode === MODE_BUTTON[1]) {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 }
@@ -70,11 +82,17 @@ function handleCM(event) {
     event.preventDefault();
 }
 
-function handleSaveClick() {
-    const image = canvas.toDataURL();
+function handleSaveClick(event) {
+    var image;
+    if(event.target === savePng){
+        image = canvas.toDataURL();
+    }
+    else if(event.target === saveJpg){
+        image = canvas.toDataURL("image/jpeg");
+    }
     const link = document.createElement("a");
     link.href = image;
-    link.download = "PaintJS[🎨]";
+    link.download = "MyPaint";
     link.click();
 }
 
@@ -91,14 +109,8 @@ Array.from(colors).forEach(color =>
     color.addEventListener("click", handleColorClick)
 );
 
-if(range){
-    range.addEventListener("input", handleRangeChange);
-}
+MODE_BUTTON.forEach(mode => mode.addEventListener("click", handleModeChange));
 
-if(mode){
-    mode.addEventListener("click", handleModeClick);
-}
-
-if (saveBtn) {
-    saveBtn.addEventListener("click", handleSaveClick);
-}
+range.addEventListener("input", handleRangeChange);
+savePng.addEventListener("click", handleSaveClick);
+saveJpg.addEventListener("click", handleSaveClick);
