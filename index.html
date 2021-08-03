@@ -29,15 +29,20 @@
             <input class="color-picker" value="#5856d6"/>
         </div>
         <div class="controls__range">
+            <input type="number" id="jsRangeValue" min="0.1" max="20.0" step="0.1">
             <img src="./minus.png" alt="thin">
-            <input type="range" id="jsRange" min="0.1" max="20.0" value="3" step="0.1"/>
+            <input type="range" id="jsRange" min="0.1" max="20.0" step="0.1"/>
             <img src="./plus.png" alt="thick">
+            <div id="jsRangeDummy">
+                <div id="jsRangePreview"></div>
+            </div>
         </div>
         <div class="controls__btns">
             <button id="jsSavePNG">PNG로 저장</button>
             <button id="jsSaveJPG">JPG로 저장</button>
         </div>
     </div>
+    <div id="cursorFollower"></div>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="app.js"></script>
     <script src="./open_library/spectrum.js"></script>
