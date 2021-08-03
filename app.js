@@ -28,16 +28,16 @@ function stopPainting() { painting = false; }
 
 function changeCursor(mode) {
     if(mode === brush) {
-        canvas.style.cursor = "url(pencil_big.cur), auto";
+        document.body.style.cursor = "url(pencil_big.cur), auto";
     }
     else if(mode === fill) {
-        canvas.style.cursor = "url(paint_bucket.cur), auto";
+        document.body.style.cursor = "url(paint_bucket.cur), auto";
     }
     else if(mode === erase) {
-        canvas.style.cursor = "url(eraser.cur), auto";
+        document.body.style.cursor = "url(eraser.cur), auto";
     }
     else {
-        canvas.style.cursor = "auto";
+        document.body.style.cursor = "auto";
     }
 }
 

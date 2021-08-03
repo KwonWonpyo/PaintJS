@@ -14,6 +14,7 @@ body {
     align-items: center;
     padding-top: 50px;
     padding-bottom: 50px;
+    cursor : url(./pencil_big.cur), auto;
 }
 
 .desc {
@@ -29,7 +30,6 @@ body {
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0px 0px 3px rgba(0, 0, 0, 0.5);
-    cursor : url(./pencil_big.cur), auto;
 }
 
 .controls {
@@ -45,7 +45,6 @@ body {
 
 .controls__btns button {
     all: unset;
-    cursor: pointer;
     font-family: 'Noto Sans KR', sans-serif;
     background-color: white;
     padding: 5px 10px;
