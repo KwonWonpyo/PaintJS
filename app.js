@@ -1,10 +1,10 @@
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
-const colors = document.getElementsByClassName("jsColor");
-const range = document.getElementById("jsRange");
 const brush = document.getElementById("jsBrush");
 const fill = document.getElementById("jsFill");
 const erase = document.getElementById("jsErase");
+const colors = Array.from(document.getElementsByClassName("sp-colorize"));
+const range = document.getElementById("jsRange");
 const savePng = document.getElementById("jsSavePNG");
 const saveJpg = document.getElementById("jsSaveJPG");
 
@@ -23,12 +23,8 @@ const MODE_BUTTON = [brush, fill, erase];
 let mode = brush;
 let painting = false;
 
-function startPainting() {
-    painting = true;
-}
-function stopPainting() {
-    painting = false;
-}
+function startPainting() { painting = true; }
+function stopPainting() { painting = false; }
 
 function changeCursor(mode) {
     if(mode === brush) {
@@ -43,6 +39,11 @@ function changeCursor(mode) {
     else {
         canvas.style.cursor = "auto";
     }
+}
+
+function changeColor(color) {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
 }
 
 function onMouseMove(event) {
@@ -76,8 +77,7 @@ function handleModeChange(event) {
 
 function handleColorClick(event) {
     const color = event.target.style.backgroundColor;
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
+    changeColor(color);
 }
 
 function handleRangeChange(event) {
@@ -117,10 +117,6 @@ if (canvas) {
     canvas.addEventListener("click", handleCanvasClick);
     canvas.addEventListener("contextmenu", handleCM); //우클릭
 }
-
-Array.from(colors).forEach(color =>
-    color.addEventListener("click", handleColorClick)
-);
 
 MODE_BUTTON.forEach(mode => mode.addEventListener("click", handleModeChange));
 

@@ -5,32 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./open_library/spectrum.css">
     <title>PaintJS</title>
 </head>
 <body>
     <p class="desc">마우스로 마음껏 그리세요(모바일 호환 준비중)</p>
     <canvas id="jsCanvas" class="canvas"></canvas>
     <div class="controls">
-        
         <div class="controls__btns">
             <button id="jsBrush">브러쉬</button>
             <button id="jsFill">모두 채우기</button>
             <button id="jsErase">지우개</button>
         </div>
         <div class="controls__colors" id="jsColors">
-            <div class="controls__color jsColor" style="background-color: #2c2c2c;"></div>
-            <div class="controls__color jsColor" style="background-color: white;"></div>
-            <div class="controls__color jsColor" style="background-color: #ff3b30;"></div>
-            <div class="controls__color jsColor" style="background-color: #ff9500;"></div>
-            <div class="controls__color jsColor" style="background-color: #ffcc00;"></div>
-            <div class="controls__color jsColor" style="background-color: #4cd963;"></div>
-            <div class="controls__color jsColor" style="background-color: #5ac8fa;"></div>
-            <div class="controls__color jsColor" style="background-color: #3e98ff;"></div>
-            <div class="controls__color jsColor" style="background-color: #5856d6;"></div>
+            <input class="color-picker" value="#000000"/>
+            <input class="color-picker" value="#ffffff"/>
+            <input class="color-picker" value="#ff3b30"/>
+            <input class="color-picker" value="#ff9500"/>
+            <input class="color-picker" value="#ffcc00"/>
+            <input class="color-picker" value="#4cd963"/>
+            <input class="color-picker" value="#5ac8fa"/>
+            <input class="color-picker" value="#3e98ff"/>
+            <input class="color-picker" value="#5856d6"/>
         </div>
         <div class="controls__range">
             <img src="./minus.png" alt="thin">
-            <input type="range" id="jsRange" min="0.1" max="5.0" value="2.5" step="0.1"/>
+            <input type="range" id="jsRange" min="0.1" max="20.0" value="3" step="0.1"/>
             <img src="./plus.png" alt="thick">
         </div>
         <div class="controls__btns">
@@ -38,12 +38,23 @@
             <button id="jsSaveJPG">JPG로 저장</button>
         </div>
     </div>
-    <div class="icon_ref">
-        <img src="pencil_big.cur" alt="brush icon" />
-        <img src="paint_bucket.cur" alt="brush icon" />
-        <img src="eraser.cur" alt="brush icon" />
-        <a href="https://www.cursor.cc/">마우스 커서는 직접 만들었습니다</a>
-    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="app.js"></script>
+    <script src="./open_library/spectrum.js"></script>
+    <script>
+        $(".color-picker").spectrum({
+            type: "component",
+            showInitial: true,
+            showAlpha: false,
+            allowEmpty: false,
+            change: function(color) {
+                color.toHexString();
+                changeColor(color);
+            }
+        });
+        $(".sp-colorize").click(function(e) {
+            handleColorClick(e);
+        });
+    </script>
 </body>
 </html>

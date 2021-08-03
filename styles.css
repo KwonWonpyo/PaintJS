@@ -1,15 +1,14 @@
 @import "reset.css";
 @font-face {
-    font-family: 'GowunBatang';
-    src: url('./fonts/GowunBatang-Regular.ttf') format('truetype')
+    font-family: 'Gowun Batang', serif;
+    src: url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
 }
 @font-face {
-    font-family: 'Noto Sans KR';
-    src: url('./fonts/NotoSansKR-Regular.otf') format('opentype')
+    font-family: 'Noto Sans KR', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 }
 body {
-    background-color: #f6f9fc;
-    font-family: 'Noto Sans KR';
+    background-color: #efeff0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,7 +17,7 @@ body {
 }
 
 .desc {
-    font-family: 'GowunBatang';
+    font-family: 'Gowun Batang', serif;
     font-size: 20px;
     font-weight: 400;
     padding-bottom: 5px;
@@ -40,14 +39,15 @@ body {
     align-items: center;
 }
 
-.controls .controls__btns {
+.controls__btns {
     margin-bottom: 15px;
 }
 
 .controls__btns button {
     all: unset;
     cursor: pointer;
-    /* background-color: white; */
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: white;
     padding: 5px 10px;
     text-align: center;
     border-radius: 5px;
@@ -62,29 +62,30 @@ body {
     transform: scale(0.96);
 }
 
-.controls .controls__colors {
+.controls__colors {
     display: flex;
 }
 
-.controls__colors .controls__color {
+.controls__color {
     width: 50px;
     height: 50px;
-    border-radius: 25px; /* should be half of width to make circle*/
     cursor: pointer;
     box-shadow: 3px 4px 2px rgba(50, 50, 93, 0.4), 0px 0px 5px rgba(0, 0, 0, 0.35);
 }
 
-.controls .controls__range {
+.controls__range {
+    width: auto;
     margin-top: 10px;
+    display: flex;
+    /* flex-direction: row; */
+    /* flex-wrap: wrap; */
+    /* flex-flow: column wrap; 위 두 개 합친거*/ 
+    /* justify-content: space-around; 주축 컨텐츠 배치 */
+    align-items: center; /* 교차축 한 줄만 */
+    /* align-content: space-between; 교차축 여러줄 */
+    /* align-self: 자기만 예외, 부모 무시 */
 }
 
 .controls__range input {
-    vertical-align: middle;
-    margin-bottom: 23px;
-}
-
-.icon_ref img{
-    display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 250px;
 }

@@ -39,6 +39,10 @@
 > 캔버스 사이즈 조정 700 -> 500 px\
 > 현재 메뉴에 따라 마우스 포인터 변경
 
+- 2021.08.03 색상 변경 기능 추가
+> `Spectrum` 오픈소스 라이브러리를 이용하여 색상 변경 기능 추가\
+
 ### 참고 사이트
 
 - 노마드 코더의 [바닐라 JS로 그림판 만들기](https://nomadcoders.co/javascript-for-beginners-2)
+- [Spectrum](https://github.com/seballot/spectrum)
