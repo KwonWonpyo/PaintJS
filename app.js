@@ -97,7 +97,7 @@ function handleModeChange(event) {
         cursorFollower.style.backgroundColor = ctx.strokeStyle;
     }
     // Button Highlight
-    for(i = 0 ; i < 3 ; i++){
+    for(i = 0 ; i < MODE_BUTTON.length ; i++){
         var button = MODE_BUTTON[i];
         if(button === mode){
             button.style.backgroundColor = "#3e98ff";
