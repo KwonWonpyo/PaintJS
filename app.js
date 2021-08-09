@@ -98,7 +98,7 @@ function handleModeChange(event) {
     }
     // Button Highlight
     for(i = 0 ; i < MODE_BUTTON.length ; i++){
-        var button = MODE_BUTTON[i];
+        let button = MODE_BUTTON[i];
         if(button === mode){
             button.style.backgroundColor = "#3e98ff";
         }
@@ -110,7 +110,9 @@ function handleModeChange(event) {
 
 function handleColorClick(event) {
     const color = event.target.style.backgroundColor;
-    changeColor(color);
+    if(mode !== erase) {
+        changeColor(color);
+    }
 }
 
 function handleRangeChange(event) {
@@ -127,7 +129,7 @@ function handleRangeChange(event) {
 }
 
 function handleCanvasClick() {
-    if (mode === MODE_BUTTON[1]) {
+    if (mode === fill) {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 }
@@ -137,7 +139,7 @@ function handleCM(event) {
 }
 
 function handleSaveClick(event) {
-    var image;
+    let image;
     if(event.target === savePng){
         image = canvas.toDataURL();
     }
@@ -157,6 +159,12 @@ if (canvas) {
     canvas.addEventListener("mouseleave", stopPainting);
     canvas.addEventListener("click", handleCanvasClick);
     canvas.addEventListener("contextmenu", handleCM); //우클릭
+    
+    // 모바일 터치 지원
+    canvas.addEventListener("touchstart", handleStart);
+    canvas.addEventListener("touchmove", onTouchMove);
+    canvas.addEventListener("touchend", handleEnd);
+    canvas.addEventListener("touchcancel", handleCancel);
 }
 
 MODE_BUTTON.forEach(mode => mode.addEventListener("click", handleModeChange));
@@ -169,4 +177,97 @@ saveJpg.addEventListener("click", handleSaveClick);
 document.onmousemove = (e) => {
     cursorFollower.style.left = e.pageX - ctx.lineWidth/2 + "px";
     cursorFollower.style.top = e.pageY - ctx.lineWidth/2 + "px";
+}
+
+// 모바일 터치 지원
+document.ontouchmove = (e) => {
+    cursorFollower.style.left = e.touches[0].pageX - ctx.lineWidth/2 + "px";
+    cursorFollower.style.top = e.touches[0].pageY - ctx.lineWidth/2 + "px";
+}
+function onTouchMove(evt) {
+    evt.preventDefault();
+    const x = evt.touches[0].pageX;
+    const y = evt.touches[0].pageY - canvas.offsetTop;
+    if(mode === brush){
+        ctx.fillRect(x-ctx.lineWidth/2, y-ctx.lineWidth/2, ctx.lineWidth, ctx.lineWidth);
+        handleMove(evt);
+    }
+    else if(mode === erase){
+        ctx.clearRect(x-ctx.lineWidth/2, y-ctx.lineWidth/2, ctx.lineWidth, ctx.lineWidth);
+    }
+}
+
+let ongoingTouches = [];
+
+function handleStart(evt) {
+    let touches = evt.changedTouches;
+    
+    if (mode === MODE_BUTTON[1]) {
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        return;
+    }
+
+    for (let i = 0; i < touches.length; i++) {
+      ongoingTouches.push(copyTouch(touches[i]));
+      ctx.beginPath();
+    }
+}
+
+function handleMove(evt) {
+    evt.preventDefault();
+    let touches = evt.changedTouches;
+
+    for (let i = 0; i < touches.length; i++) {
+        let idx = ongoingTouchIndexById(touches[i].identifier);
+
+        if (idx >= 0) {
+        ctx.beginPath();
+        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - canvas.offsetTop);
+        ctx.lineTo(touches[i].pageX, touches[i].pageY - canvas.offsetTop);
+        ctx.stroke();
+
+        ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+        }
+    }
+}
+
+function handleEnd(evt) {
+    evt.preventDefault();
+    let touches = evt.changedTouches;
+
+    for (let i = 0; i < touches.length; i++) {
+        let idx = ongoingTouchIndexById(touches[i].identifier);
+
+        if (idx >= 0) {
+        ctx.beginPath();
+        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - canvas.offsetTop);
+        ctx.lineTo(touches[i].pageX, touches[i].pageY - canvas.offsetTop);
+        ongoingTouches.splice(idx, 1);  // remove it; we're done
+        }
+    }
+}
+
+function handleCancel(evt) {
+    evt.preventDefault();
+    let touches = evt.changedTouches;
+
+    for (let i = 0; i < touches.length; i++) {
+    let idx = ongoingTouchIndexById(touches[i].identifier);
+    ongoingTouches.splice(idx, 1);  // remove it; we're done
+    }
+}
+
+function copyTouch(touch) {
+    return { identifier: touch.identifier, pageX: touch.pageX, pageY: touch.pageY };
+}
+
+function ongoingTouchIndexById(idToFind) {
+    for (let i = 0; i < ongoingTouches.length; i++) {
+        let id = ongoingTouches[i].identifier;
+
+        if (id == idToFind) {
+        return i;
+        }
+    }
+    return -1;    // not found
 }
