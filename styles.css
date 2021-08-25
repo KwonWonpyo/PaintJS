@@ -1,5 +1,4 @@
 @import "reset.css";
-@import "canvas_media.css";
 @font-face {
     font-family: 'Gowun Batang', serif;
     src: url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
@@ -16,6 +15,13 @@ body {
     padding-top: 10px;
     padding-bottom: 50px;
     cursor : url(./pencil_big.cur), auto;
+}.canvas {
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0px 0px 3px rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 .desc {
     font-family: 'Gowun Batang', serif;
@@ -38,6 +44,9 @@ body {
 }
 .controls__btns {
     margin-bottom: 15px;
+}
+.controls__colors {
+    display: flex;
 }
 #jsSavePNG, #jsSaveJPG {
     cursor: pointer;

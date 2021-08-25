@@ -1,17 +1,7 @@
-.canvas {
-    width: 500px;
-    height: 500px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0px 0px 3px rgba(0, 0, 0, 0.5);
-    position: relative;
-}
-.controls__colors {
-    display: flex;
-}
-/* 작은 스마트폰 세로 */
+/* 스마트폰 세로 */
 @media screen and (max-device-width: 440px){
     .canvas {
+        margin-top: 20px;
         width: 80vmin;
         height: 80vmin;
     }
@@ -21,47 +11,20 @@
         grid-template-columns: 55px 55px 55px 55px;
     }
 }
-/* 스마트폰 세로 */
-@media screen and (min-width : 441px) and (max-device-width: 479px) and (orientation : portrait ) {
+/* 작은 태블릿 세로 */
+@media screen and (min-width: 441px) and (max-width: 767px) and (orientation : portrait ) {
     .canvas {
         width: 80vmin;
         height: 80vmin;
     }
 
 }
-/* 스마트폰 가로 */
-@media screen and (min-width : 441px) and (max-device-width: 479px) and (orientation : landscape ) {
-    .canvas {
-        width: 80vmin;
-        height: 80vmin;
-    }
-}
-/* 태블릿 세로 */
-@media screen and (min-width : 480px) and (max-width : 767px) and (orientation : portrait ) {
-    .canvas {
-        width: 80vmin;
-        height: 80vmin;
-    }
-}
-/* 태블릿 가로 */
-@media screen and (min-width : 480px) and (max-width : 767px) and (orientation : landscape ) {
-    .canvas {
-        width: 80vmax;
-        height: 80vmin;
-    }
-}
 /* 태블릿 세로 */
 @media screen and (min-width : 768px) and (max-width : 1023px) and (orientation : portrait ) {
     .canvas {
+        margin-top: 50px;
         width: 90vmin;
         height: 90vmin;
-    }
-}
-/* 태블릿 가로 */
-@media screen and (min-width : 768px) and (max-width : 1023px) and (orientation : landscape ) {
-    .canvas {
-        width: 90vmax;
-        height: 80vmin;
     }
 }
 /* iPad Pro 세로 */
@@ -73,23 +36,56 @@
         height: 900px;
     }
 }
-/* iPad Pro 세로 */
-@media screen and (min-width : 1024px) and (max-width : 1365px) and (orientation : landscape ) {
+/* 스마트폰 가로 */
+@media screen and (max-width : 767px) and (orientation : landscape ) {
+    .canvas {
+        width: 70vmax;
+        height: 60vmin;
+    }
+    .controls {
+        margin-top: 5px;
+    }
+    .controls__btns {
+        margin-bottom: 5px;
+    }
+    .sp-original-input-container,
+    .sp-original-input-container .sp-add-on,
+    .sp-original-input-container .sp-add-on .sp-colorize,
+    .sp-original-input-container input,
+    .color-picker.spectrum.with-add-on {
+        width: 45px;
+        height: 45px;
+    }
+    .sp-original-input-container input {
+        margin: 0 !important;
+        padding: 0;
+        font-size: 10px;
+        text-align: center;
+        border: none;
+    }
+    .controls__range #jsRange {
+        width: 300px;
+        margin-top: 15px;
+    }
+}
+/* 태블릿 가로 */
+@media screen and (min-width : 768px) and (max-width : 1365px) and (orientation : landscape ) {
+    .canvas {
+        width: 90vmax;
+        height: 70vmin;
+    }
+}
+/* iPad Pro 가로, 데스크탑 */
+@media screen and (min-width : 1366px) and (max-width : 1599px) and (orientation : landscape ) {
     .canvas {
         width: 90vmax;
         height: 80vmin;
     }
 }
-/*큰 모니터 16:9 */
-@media screen and (min-width : 1366px) {
-    .canvas {
-        width: 1366px;
-        height: 768px;
-    }
-}
-/* 더 큰 모니터 16:9 */
+/* 큰 모니터 16:9 */
 @media screen and (min-width : 1600px) {
     .canvas {
+        margin-top: 100px;
         width: 1600px;
         height: 900px;
     }

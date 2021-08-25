@@ -5,6 +5,7 @@
 제가 만든 그림판 웹사이트는 `GitHub Pages`를 통해 배포중입니다. 
 
 - 결과물 미리보기 : [https://kwonwonpyo.github.io/PaintJS/](https://kwonwonpyo.github.io/PaintJS/)
+- 블로그 포스팅 보기 : [시리즈 - JavaScript로 그림판 만들기](https://velog.io/@commi1106/series/HTML-%ED%83%9C%EA%B7%B8-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0)
 
 ### 강좌 이후 추가된 내용
 

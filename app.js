@@ -11,7 +11,7 @@ const savePng = document.getElementById("jsSavePNG");
 const saveJpg = document.getElementById("jsSaveJPG");
 
 const INITIAL_COLOR = "#2c2c2c";
-const INITIAL_LINEWIDTH = 3.0;
+const INITIAL_LINEWIDTH = 4.0;
 
 const { width, height } = canvas.getBoundingClientRect();
 canvas.width = width;
