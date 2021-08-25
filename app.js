@@ -188,6 +188,8 @@ function onTouchMove(evt) {
     const x = evt.touches[0].pageX - canvas.offsetLeft;
     const y = evt.touches[0].pageY - canvas.offsetTop;
     if (mode === brush) {
+        ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2, true);
+        ctx.fill();
         handleMove(evt);
     }
     else if (mode === erase) {
