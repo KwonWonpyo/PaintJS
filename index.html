@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +9,8 @@
     <link rel="stylesheet" href="./open_library/spectrum.css">
     <title>PaintJS</title>
 </head>
+
 <body>
-    <p class="desc">마우스로 마음껏 그리세요(모바일 호환 준비중)</p>
     <canvas id="jsCanvas" class="canvas"></canvas>
     <div class="controls">
         <div class="controls__btns">
@@ -18,20 +19,19 @@
             <button id="jsErase">지우개</button>
         </div>
         <div class="controls__colors" id="jsColors">
-            <input class="color-picker" value="#000000"/>
-            <input class="color-picker" value="#ffffff"/>
-            <input class="color-picker" value="#ff3b30"/>
-            <input class="color-picker" value="#ff9500"/>
-            <input class="color-picker" value="#ffcc00"/>
-            <input class="color-picker" value="#4cd963"/>
-            <input class="color-picker" value="#5ac8fa"/>
-            <input class="color-picker" value="#3e98ff"/>
-            <input class="color-picker" value="#5856d6"/>
+            <input class="color-picker" value="#000000" />
+            <input class="color-picker" value="#ffffff" />
+            <input class="color-picker" value="#ff3b30" />
+            <input class="color-picker" value="#ff9500" />
+            <input class="color-picker" value="#ffcc00" />
+            <input class="color-picker" value="#4cd963" />
+            <input class="color-picker" value="#3e98ff" />
+            <input class="color-picker" value="#5856d6" />
         </div>
         <div class="controls__range">
-            <input type="number" id="jsRangeValue" min="0.1" max="20.0" step="0.1">
+            <input type="number" id="jsRangeValue" min="1" max="30.0" step="0.1">
             <img src="./minus.png" alt="thin">
-            <input type="range" id="jsRange" min="0.1" max="20.0" step="0.1"/>
+            <input type="range" id="jsRange" min="1" max="30.0" step="0.1" />
             <img src="./plus.png" alt="thick">
             <div id="jsRangeDummy">
                 <div id="jsRangePreview"></div>
@@ -52,14 +52,15 @@
             showInitial: true,
             showAlpha: false,
             allowEmpty: false,
-            change: function(color) {
+            change: function (color) {
                 color.toHexString();
                 changeColor(color);
             }
         });
-        $(".sp-colorize").click(function(e) {
+        $(".sp-colorize").click(function (e) {
             handleColorClick(e);
         });
     </script>
 </body>
+
 </html>

@@ -4,7 +4,6 @@ const brush = document.getElementById("jsBrush");
 const fill = document.getElementById("jsFill");
 const erase = document.getElementById("jsErase");
 const cursorFollower = document.getElementById("cursorFollower");
-const colors = Array.from(document.getElementsByClassName("sp-colorize"));
 const range = document.getElementById("jsRange");
 const rangeValue = document.getElementById("jsRangeValue");
 const rangePreview = document.getElementById("jsRangePreview");
@@ -13,10 +12,10 @@ const saveJpg = document.getElementById("jsSaveJPG");
 
 const INITIAL_COLOR = "#2c2c2c";
 const INITIAL_LINEWIDTH = 3.0;
-const CANVAS_SIZE = 500;
 
-canvas.width = CANVAS_SIZE;
-canvas.height = CANVAS_SIZE;
+const { width, height } = canvas.getBoundingClientRect();
+canvas.width = width;
+canvas.height = height;
 
 ctx.strokeStyle = INITIAL_COLOR;
 ctx.fillStyle = INITIAL_COLOR;
@@ -30,8 +29,8 @@ range.value = INITIAL_LINEWIDTH;
 rangePreview.style.backgroundColor = INITIAL_COLOR;
 rangePreview.style.width = INITIAL_LINEWIDTH + "px";
 rangePreview.style.height = INITIAL_LINEWIDTH + "px";
-rangePreview.style.top = (20 - INITIAL_LINEWIDTH)/2 + "px";
-rangePreview.style.right = (45 - INITIAL_LINEWIDTH)/2 + "px";
+rangePreview.style.top = (20 - INITIAL_LINEWIDTH) / 2 + "px";
+rangePreview.style.right = (45 - INITIAL_LINEWIDTH) / 2 + "px";
 
 // 모드 설정 - 첫 로딩 시 brush
 const MODE_BUTTON = [brush, fill, erase];
@@ -42,13 +41,13 @@ function startPainting() { painting = true; }
 function stopPainting() { painting = false; }
 
 function changeCursor(mode) {
-    if(mode === brush) {
+    if (mode === brush) {
         document.body.style.cursor = "url(pencil_big.cur), auto";
     }
-    else if(mode === fill) {
+    else if (mode === fill) {
         document.body.style.cursor = "url(paint_bucket.cur), auto";
     }
-    else if(mode === erase) {
+    else if (mode === erase) {
         document.body.style.cursor = "url(eraser.cur), auto";
     }
     else {
@@ -66,8 +65,8 @@ function changeColor(color) {
 function onMouseMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
-    if(mode === brush){
-        if(!painting) {
+    if (mode === brush) {
+        if (!painting) {
             ctx.beginPath();
             ctx.moveTo(x, y);
         }
@@ -76,9 +75,9 @@ function onMouseMove(event) {
             ctx.stroke();
         }
     }
-    else if(mode === erase){
-        if(painting) {
-            ctx.clearRect(x-ctx.lineWidth/2, y-ctx.lineWidth/2, ctx.lineWidth, ctx.lineWidth);
+    else if (mode === erase) {
+        if (painting) {
+            ctx.clearRect(x - ctx.lineWidth / 2, y - ctx.lineWidth / 2, ctx.lineWidth, ctx.lineWidth);
         }
     }
 }
@@ -88,7 +87,7 @@ function handleModeChange(event) {
     changeCursor(mode);
 
     // 지우개 효과
-    if(mode === erase){
+    if (mode === erase) {
         rangePreview.style.backgroundColor = "white";
         cursorFollower.style.backgroundColor = "white";
     }
@@ -97,9 +96,9 @@ function handleModeChange(event) {
         cursorFollower.style.backgroundColor = ctx.strokeStyle;
     }
     // Button Highlight
-    for(i = 0 ; i < MODE_BUTTON.length ; i++){
+    for (i = 0; i < MODE_BUTTON.length; i++) {
         let button = MODE_BUTTON[i];
-        if(button === mode){
+        if (button === mode) {
             button.style.backgroundColor = "#3e98ff";
         }
         else {
@@ -110,7 +109,7 @@ function handleModeChange(event) {
 
 function handleColorClick(event) {
     const color = event.target.style.backgroundColor;
-    if(mode !== erase) {
+    if (mode !== erase) {
         changeColor(color);
     }
 }
@@ -122,15 +121,15 @@ function handleRangeChange(event) {
     range.value = size;
     rangePreview.style.width = size + "px";
     rangePreview.style.height = size + "px";
-    rangePreview.style.top = (20 - size)/2 + "px";
-    rangePreview.style.right = (45 - size)/2 + "px";
+    rangePreview.style.top = (20 - size) / 2 + "px";
+    rangePreview.style.right = (45 - size) / 2 + "px";
     cursorFollower.style.width = size + "px";
     cursorFollower.style.height = size + "px";
 }
 
 function handleCanvasClick() {
     if (mode === fill) {
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 }
 
@@ -140,10 +139,10 @@ function handleCM(event) {
 
 function handleSaveClick(event) {
     let image;
-    if(event.target === savePng){
+    if (event.target === savePng) {
         image = canvas.toDataURL();
     }
-    else if(event.target === saveJpg){
+    else if (event.target === saveJpg) {
         image = canvas.toDataURL("image/jpeg");
     }
     const link = document.createElement("a");
@@ -159,7 +158,7 @@ if (canvas) {
     canvas.addEventListener("mouseleave", stopPainting);
     canvas.addEventListener("click", handleCanvasClick);
     canvas.addEventListener("contextmenu", handleCM); //우클릭
-    
+
     // 모바일 터치 지원
     canvas.addEventListener("touchstart", handleStart);
     canvas.addEventListener("touchmove", onTouchMove);
@@ -175,25 +174,25 @@ savePng.addEventListener("click", handleSaveClick);
 saveJpg.addEventListener("click", handleSaveClick);
 
 document.onmousemove = (e) => {
-    cursorFollower.style.left = e.pageX - ctx.lineWidth/2 + "px";
-    cursorFollower.style.top = e.pageY - ctx.lineWidth/2 + "px";
+    cursorFollower.style.left = e.pageX - ctx.lineWidth / 2 + "px";
+    cursorFollower.style.top = e.pageY - ctx.lineWidth / 2 + "px";
 }
 
 // 모바일 터치 지원
 document.ontouchmove = (e) => {
-    cursorFollower.style.left = e.touches[0].pageX - ctx.lineWidth/2 + "px";
-    cursorFollower.style.top = e.touches[0].pageY - ctx.lineWidth/2 + "px";
+    cursorFollower.style.left = e.touches[0].pageX - ctx.lineWidth / 2 + "px";
+    cursorFollower.style.top = e.touches[0].pageY - ctx.lineWidth / 2 + "px";
 }
 function onTouchMove(evt) {
     evt.preventDefault();
-    const x = evt.touches[0].pageX;
+    const x = evt.touches[0].pageX - canvas.offsetLeft;
     const y = evt.touches[0].pageY - canvas.offsetTop;
-    if(mode === brush){
-        ctx.fillRect(x-ctx.lineWidth/2, y-ctx.lineWidth/2, ctx.lineWidth, ctx.lineWidth);
+    if (mode === brush) {
+        ctx.fillRect(x - ctx.lineWidth / 2, y - ctx.lineWidth / 2, ctx.lineWidth, ctx.lineWidth);
         handleMove(evt);
     }
-    else if(mode === erase){
-        ctx.clearRect(x-ctx.lineWidth/2, y-ctx.lineWidth/2, ctx.lineWidth, ctx.lineWidth);
+    else if (mode === erase) {
+        ctx.clearRect(x - ctx.lineWidth / 2, y - ctx.lineWidth / 2, ctx.lineWidth, ctx.lineWidth);
     }
 }
 
@@ -201,15 +200,15 @@ let ongoingTouches = [];
 
 function handleStart(evt) {
     let touches = evt.changedTouches;
-    
+
     if (mode === MODE_BUTTON[1]) {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         return;
     }
 
     for (let i = 0; i < touches.length; i++) {
-      ongoingTouches.push(copyTouch(touches[i]));
-      ctx.beginPath();
+        ongoingTouches.push(copyTouch(touches[i]));
+        ctx.beginPath();
     }
 }
 
@@ -221,12 +220,12 @@ function handleMove(evt) {
         let idx = ongoingTouchIndexById(touches[i].identifier);
 
         if (idx >= 0) {
-        ctx.beginPath();
-        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - canvas.offsetTop);
-        ctx.lineTo(touches[i].pageX, touches[i].pageY - canvas.offsetTop);
-        ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(ongoingTouches[idx].pageX - canvas.offsetLeft, ongoingTouches[idx].pageY - canvas.offsetTop);
+            ctx.lineTo(touches[i].pageX - canvas.offsetLeft, touches[i].pageY - canvas.offsetTop);
+            ctx.stroke();
 
-        ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+            ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
         }
     }
 }
@@ -239,10 +238,10 @@ function handleEnd(evt) {
         let idx = ongoingTouchIndexById(touches[i].identifier);
 
         if (idx >= 0) {
-        ctx.beginPath();
-        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - canvas.offsetTop);
-        ctx.lineTo(touches[i].pageX, touches[i].pageY - canvas.offsetTop);
-        ongoingTouches.splice(idx, 1);  // remove it; we're done
+            ctx.beginPath();
+            ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY - canvas.offsetTop);
+            ctx.lineTo(touches[i].pageX, touches[i].pageY - canvas.offsetTop);
+            ongoingTouches.splice(idx, 1);  // remove it; we're done
         }
     }
 }
@@ -252,8 +251,8 @@ function handleCancel(evt) {
     let touches = evt.changedTouches;
 
     for (let i = 0; i < touches.length; i++) {
-    let idx = ongoingTouchIndexById(touches[i].identifier);
-    ongoingTouches.splice(idx, 1);  // remove it; we're done
+        let idx = ongoingTouchIndexById(touches[i].identifier);
+        ongoingTouches.splice(idx, 1);  // remove it; we're done
     }
 }
 
@@ -266,7 +265,7 @@ function ongoingTouchIndexById(idToFind) {
         let id = ongoingTouches[i].identifier;
 
         if (id == idToFind) {
-        return i;
+            return i;
         }
     }
     return -1;    // not found

@@ -1,4 +1,5 @@
 @import "reset.css";
+@import "canvas_media.css";
 @font-face {
     font-family: 'Gowun Batang', serif;
     src: url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
@@ -12,7 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 10px;
     padding-bottom: 50px;
     cursor : url(./pencil_big.cur), auto;
 }
@@ -28,21 +29,13 @@ body {
     z-index: 1;
     pointer-events: none;
 }
-.canvas {
-    width: 500px;
-    height: 500px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0px 0px 3px rgba(0, 0, 0, 0.5);
-    position: relative;
-}
 .controls {
     margin-top: 10px;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
 }
-
 .controls__btns {
     margin-bottom: 15px;
 }
@@ -65,9 +58,6 @@ body {
 .controls__btns button:active {
     transform: scale(0.96);
 }
-.controls__colors {
-    display: flex;
-}
 .controls__range {
     width: auto;
     margin-top: 10px;
@@ -81,11 +71,11 @@ body {
     /* align-self: 자기만 예외, 부모 무시 */
 }
 .controls__range #jsRange {
-    width: 250px;
+    width: 200px;
 }
 .controls__range #jsRangeValue,
 .controls__range #jsRangeDummy {
-    width: 45px;
+    width: 35px;
     height: 20px;
     margin: 0;
     padding: 0;
